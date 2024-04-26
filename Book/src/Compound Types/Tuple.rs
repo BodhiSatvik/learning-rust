@@ -1,41 +1,44 @@
 
 fn main() {
-    let arr: [i32; 5] = [1, 2, 3, 4, 5];
-
-    assert!(arr.len() == 5);
+    let _t0: (u8,i16) = (0, -1);
+    // Tuples can be tuple's members
+    let _t1: (u8, (i16, u32)) = (0, (-1, 1));
+    let t: (u8, u16, i64, &str, String) = (1u8, 2u16, 3i64, "hello", String::from(", world"));
 }
 fn main() {
-    // we can ignore parts of the array type or even the whole type, let the compiler infer it for us
-    let arr0 = [1, 2, 3];
-    let arr: [_; 3] = ['a', 'b', 'c'];
-
-    // Arrays are stack allocated, `std::mem::size_of_val` return the bytes which array occupies
-    // A char takes 4 byte in Rust: Unicode char
-    assert!(std::mem::size_of_val(&arr) == 12);
+    let t = ("i", "am", "sunface");
+    assert_eq!(t.2, "sunface");
 }
 fn main() {
-    let list: [i32; 100] = [1; 100];
-
-    assert!(list[0] == 1);
-    assert!(list.len() == 100);
+    let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
+    println!("too long tuple: {:?}", too_long_tuple);
 }
 fn main() {
-    // fix the error
-    let _arr = [1, 2, 3];
+    let tup = (1, 6.4, "hello");
+
+    let (x, z, y) = tup;
+
+    assert_eq!(x, 1);
+    assert_eq!(y, "hello");
+    assert_eq!(z, 6.4);
 }
 fn main() {
-    let arr = ['a', 'b', 'c'];
+    let (x, y, z);
 
-    let ele = arr[0];
+    // fill the blank
+    (y, z, x) = (1, 2, 3);
 
-    assert!(ele == 'a');
+    assert_eq!(x, 3);
+    assert_eq!(y, 1);
+    assert_eq!(z, 2);
 }
 fn main() {
-    let names = [String::from("Sunfei"), "Sunface".to_string()];
+    let (x, y) = sum_multiply((2, 3));
 
-    // `get` returns an Option<T>, it's safe to use
-    let name0 = names.get(0).unwrap();
+    assert_eq!(x, 5);
+    assert_eq!(y, 6);
+}
 
-    // but indexing is not safe
-    let _name1 = &names[1];
+fn sum_multiply(nums: (i32, i32)) -> (i32, i32) {
+    (nums.0 + nums.1, nums.0 * nums.1)
 }
